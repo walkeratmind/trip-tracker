@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.rakesh.triptracker.fragment.AddFragment;
 import com.rakesh.triptracker.fragment.HomeFragment;
 import com.rakesh.triptracker.fragment.MapFragment;
 
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_explore:
                     fragment = new MapFragment();
                     loadFragment(fragment);
+                    return true;
+                case R.id.navigation_add:
+                    loadFragment(new AddFragment());
                     return true;
                 case R.id.navigation_notifications:
                     return true;

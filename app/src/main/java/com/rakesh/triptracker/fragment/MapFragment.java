@@ -1,6 +1,7 @@
 package com.rakesh.triptracker.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,31 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.rakesh.triptracker.Constants;
 import com.rakesh.triptracker.R;
+import com.rakesh.triptracker.data.model.VisitedPlaces;
+
+import java.util.Map;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    private static final String TAG = "MainActivity";
+
     private GoogleMap mMap;
+
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
+    VisitedPlaces visitedPlaces;
 
     public MapFragment() {}
 
@@ -37,6 +57,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         Toast.makeText(getContext(), "map", Toast.LENGTH_SHORT).show();
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment  mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -51,11 +76,51 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng Nepal = new LatLng(27, 85);
-        mMap.addMarker(new MarkerOptions().position(Nepal).title("Marker in nepal"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Nepal));
+        LatLng nepal = new LatLng(27, 85);
+        // Add a marker in  and move the camera
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nepal, Constants.DEFAULT_ZOOM ));
+
+        db.collection(Constants.VISITED_COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                MarkerOptions markerOptions = new MarkerOptions();
+
+                                LatLng latLng;
+                                Map<String, Object> location = (Map<String, Object>) documentSnapshot.get("latlng");
+                                double latitude = (double) location.get("latitude");
+                                double longitude = (double) location.get("longitude");
+                                Log.d(TAG, "from firebase: " + location.toString());
+
+                                latLng = new LatLng(latitude, longitude);
+                                String userId = (String) documentSnapshot.get("userId").toString();
+
+                                markerOptions.title("User Info");
+                                markerOptions.position(latLng);
+                                markerOptions.snippet(userId);
+                                mMap.addMarker(markerOptions);
+                            }
+                        } else {
+                            Log.d(TAG, "Error loading data: "+ task.getException().toString());
+
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Error loading data: "+ e.toString());
+                    }
+                });
+//        LatLng Nepal = new LatLng(27, 85);
+//        mMap.addMarker(new MarkerOptions().position(Nepal).title("Marker in nepal"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(Nepal));
+
     }
+
 
     @Override
     public void onStart() {
