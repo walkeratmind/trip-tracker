@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "529219767365",
+    "firebase_url": "https://triptracker-aa135.firebaseio.com",
+    "project_id": "triptracker-aa135",
+    "storage_bucket": "triptracker-aa135.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529219767365:android:c48c390c8fd0dc8a",
+        "android_client_info": {
+          "package_name": "com.rakesh.triptracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529219767365-69jaqra3nuche5a13el3a77lk8chkm0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rakesh.triptracker",
+            "certificate_hash": "7c89153a7a94f5a8a68c45175d4dd1db493d2566"
+          }
+        },
+        {
+          "client_id": "529219767365-tl4ibfb33qlonmhdk7ev7de7qcec3e4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ6ORAvAsZsSvooMTZbWUzSajfp38RHnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529219767365-tl4ibfb33qlonmhdk7ev7de7qcec3e4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
