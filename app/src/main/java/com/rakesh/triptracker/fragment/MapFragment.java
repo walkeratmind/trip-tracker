@@ -182,6 +182,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         usernameText.setText(username);
         emailText.setText(email);
 
+
         InfoDialog.findViewById(R.id.close_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
