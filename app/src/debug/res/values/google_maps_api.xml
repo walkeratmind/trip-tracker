@@ -22,6 +22,6 @@
     -->
 
     <!--for map api of arbind paid id-->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAiKSQQt83C7rUB8FYMTyULUzasBzgiDZE</string>
-    <string name="browser_key">AIzaSyBsJyAKr9zTWqlAiLwdmI-u7vIqnu-_hg0</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDVImQWOUXYPSm7SQPrQD3ObV2WbY5QSOM</string>
+    <string name="browser_key">AIzaSyAxaofEfnG_6LPL6MzFvQVl5aZL8ACpKTY</string>
 </resources>
